@@ -30,7 +30,7 @@ app.post('/itens', (req, res) => {
 });
 
 // Rota para listar todos os itens
-app.get('/itens', (req, res) => {
+app.get('/itensListagem', (req, res) => {
     try {
         res.status(200).send({ message: 'Itens retornados com sucesso!', data: listaItens });
     } catch (error) {
