@@ -1,5 +1,7 @@
-// Importando express
 import express from 'express';
+import cors from 'cors';
+
+app.use(cors());
 
 // Definindo a porta do servidor
 const PORT = 8888;
