@@ -2,7 +2,7 @@
 import express from 'express';
 
 // Definindo a porta do servidor
-const PORT = 8080;
+const PORT = 8888;
 
 // Inicializando o array de itens
 let listaItens = [];
