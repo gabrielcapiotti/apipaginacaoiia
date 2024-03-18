@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 
-app.use(cors());
-
 // Definindo a porta do servidor
 const PORT = 8888;
 
@@ -14,7 +12,7 @@ const app = express();
 
 // Habilitando o uso de JSON no corpo das requisições
 app.use(express.json());
-
+app.use(cors());
 // Rota para adicionar um novo item
 app.post('/itens', (req, res) => {
     try {
