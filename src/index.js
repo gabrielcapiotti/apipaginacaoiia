@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 // Rota para paginação de itens
-app.post('/itens/paginados', async (req, res) => {
+app.post('/paginacao', async (req, res) => {
     try {
         // Recuperando os parâmetros da query
         const { page = 1, limit = 5 } = req.query;
