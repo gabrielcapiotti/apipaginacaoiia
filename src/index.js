@@ -30,7 +30,7 @@ app.post('/itens', (req, res) => {
 });
 
 // Rota para listar todos os itens
-app.get('/itensListagem', (req, res) => {
+app.get('/itens', (req, res) => {
     try {
         res.status(200).send({ message: 'Itens retornados com sucesso!', data: listaItens });
     } catch (error) {
@@ -42,7 +42,16 @@ app.get('/itensListagem', (req, res) => {
 app.get('/itens/paginacao', async (req, res) => {
     try {
         // Recuperando os parâmetros da query
-        const { page = 1, limit = 5 } = req.query;
+        let { page = 1, limit = 5 } = req.query;
+        
+        // Convertendo os parâmetros para números inteiros
+        page = parseInt(page);
+        limit = parseInt(limit);
+
+        // Verificando se o limite é maior que zero, caso contrário, define um valor padrão de 5
+        if (isNaN(limit) || limit <= 0) {
+            limit = 5;
+        }
 
         // Lógica para calcular a quantidade total de páginas
         const totalItems = listaItens.length;
@@ -55,10 +64,10 @@ app.get('/itens/paginacao', async (req, res) => {
 
         res.status(200).send({ 
             message: 'Itens retornados com sucesso!',
-            currentPage: parseInt(page),
+            currentPage: page,
             totalPages: totalPages,
-            hasNextPage: parseInt(page) < totalPages,
-            hasPreviousPage: parseInt(page) > 1,
+            hasNextPage: page < totalPages,
+            hasPreviousPage: page > 1,
             data: itensPaginados
         });
     } catch (error) {
