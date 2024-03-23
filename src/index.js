@@ -30,13 +30,35 @@ app.post('/itens', (req, res) => {
 });
 
 // Rota para listar todos os itens
-app.get('/itens', (req, res) => {
+// Rota para listar todos os itens com suporte a paginação e filtro
+app.get('/itensFiltro', (req, res) => {
     try {
-        res.status(200).send({ message: 'Itens retornados com sucesso!', data: listaItens });
+        const { nome, valor } = req.query;
+
+        if (!nome || !valor) {
+            return res.status(400).send({ message: 'Parâmetros de consulta incompletos. Por favor, forneça tanto o nome quanto o valor.' });
+        }
+
+        const valorFloat = parseFloat(valor);
+        const itemFiltrado = listaItens.find(item => item.nome === nome && item.valor === valorFloat);
+
+        if (!itemFiltrado) {
+            return res.status(404).send({ message: 'Nenhum item encontrado com os critérios especificados.' });
+        }
+
+        res.status(200).send({ 
+            message: 'Item retornado com sucesso!',
+            data: itemFiltrado
+        });
     } catch (error) {
+        console.log(error);
         res.status(500).send({ message: 'Erro interno no servidor.' });
     }
 });
+
+
+
+
 
 // Rota para paginação de itens
 app.get('/itens/paginacao', async (req, res) => {
